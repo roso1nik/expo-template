@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ghub-mobile",
-    "slug": "ghub-mobile",
+    "name": "GHUB",
+    "slug": "GHUB",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
