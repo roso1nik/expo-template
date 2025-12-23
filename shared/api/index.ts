@@ -1,60 +1,54 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { BACKEND_BASE_URL, GLOBAL_DICTIONARY, STORAGE_KEYS } from "../config";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import { BACKEND_BASE_URL, GLOBAL_DICTIONARY, STORAGE_KEYS } from '../config'
 
 export const apiClient = axios.create({
-    baseURL: BACKEND_BASE_URL,
-});
+    baseURL: BACKEND_BASE_URL
+})
 
 apiClient.interceptors.request.use(
     async (config) => {
-        if (typeof window !== "undefined") {
-            const accessToken = await AsyncStorage.getItem(
-                GLOBAL_DICTIONARY.ACCESS_TOKEN
-            );
+        if (typeof window !== 'undefined') {
+            const accessToken = await AsyncStorage.getItem(GLOBAL_DICTIONARY.ACCESS_TOKEN)
             if (accessToken) {
-                config.headers["Authorization"] = `Bearer ${accessToken}`;
+                config.headers['Authorization'] = `Bearer ${accessToken}`
             }
 
-            const language = await AsyncStorage.getItem(STORAGE_KEYS.LANGUAGE);
+            const language = await AsyncStorage.getItem(STORAGE_KEYS.LANGUAGE)
 
             if (language && config.url) {
-                const separator = config.url.includes("?") ? "&" : "?";
-                config.url = `${
-                    config.url
-                }${separator}lang=${encodeURIComponent(language)}`;
+                const separator = config.url.includes('?') ? '&' : '?'
+                config.url = `${config.url}${separator}lang=${encodeURIComponent(language)}`
             }
 
-            return config;
+            return config
         }
-        return config;
+        return config
     },
     (error) => Promise.reject(error)
-);
+)
 
-let refreshTokenAttempts = 0;
+let refreshTokenAttempts = 0
 
 apiClient.interceptors.response.use(
     (response) => response,
     async (error) => {
-        const originalRequest = error.config;
+        const originalRequest = error.config
 
-        if (typeof window !== "undefined") {
+        if (typeof window !== 'undefined') {
             if (error.response?.status === 401 && !originalRequest._retry) {
                 if (refreshTokenAttempts >= 3) {
-                    return Promise.reject(error);
+                    return Promise.reject(error)
                 }
 
-                originalRequest._retry = true;
-                refreshTokenAttempts += 1;
+                originalRequest._retry = true
+                refreshTokenAttempts += 1
 
                 try {
-                    const refreshTokenLocal = await AsyncStorage.getItem(
-                        GLOBAL_DICTIONARY.REFRESH_TOKEN
-                    );
+                    const refreshTokenLocal = await AsyncStorage.getItem(GLOBAL_DICTIONARY.REFRESH_TOKEN)
 
                     if (!refreshTokenLocal) {
-                        return Promise.reject(error);
+                        return Promise.reject(error)
                     }
 
                     // const { accessToken, refreshToken } = (
@@ -70,7 +64,7 @@ apiClient.interceptors.response.use(
                     //     refreshToken
                     // );
 
-                    refreshTokenAttempts = 0;
+                    refreshTokenAttempts = 0
 
                     // apiClient.defaults.headers.common[
                     //     "Authorization"
@@ -79,13 +73,13 @@ apiClient.interceptors.response.use(
                     //     "Authorization"
                     // ] = `Bearer ${accessToken}`;
 
-                    return apiClient(originalRequest);
+                    return apiClient(originalRequest)
                 } catch (refreshError) {
-                    return Promise.reject(refreshError);
+                    return Promise.reject(refreshError)
                 }
             }
         }
 
-        return Promise.reject(error);
+        return Promise.reject(error)
     }
-);
+)
