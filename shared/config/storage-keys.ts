@@ -1,3 +1,4 @@
 export const STORAGE_KEYS = {
-    LANGUAGE: "language",
-} as const;
+    LANGUAGE: 'language',
+    COLOR_SCHEME: 'color-scheme'
+} as const
