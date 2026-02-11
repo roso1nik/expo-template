@@ -1,4 +1,5 @@
 import { useReactiveTitles } from '@/shared/i18n/hooks'
+import { useInitPushNotificaionsSettings } from '@/shared/notifications/hooks/usePushNotifications'
 import Feather from '@expo/vector-icons/Feather'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { BlurView } from 'expo-blur'
@@ -8,6 +9,9 @@ import 'react-native-reanimated'
 
 export default function RootLayout() {
     const { getStackScreenOptions } = useReactiveTitles()
+
+    // INIT PUSH-NOTIFICATIONS (DONT WORK AT EXPO GO, COMMENT IN DEV)
+    useInitPushNotificaionsSettings()
 
     return (
         <Tabs

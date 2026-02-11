@@ -9,7 +9,7 @@
 [![React](https://img.shields.io/badge/React-19.1-61dafb.svg)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
-_Версия: 28.01.2026 (v2)_
+_Версия: 11.02.2026 (v3)_
 
 </div>
 
@@ -24,6 +24,7 @@ _Версия: 28.01.2026 (v2)_
 
 - 🎨 **Готовый UI-kit** с светлой и темной темой
 - 🌍 **Локализация** (i18next) из коробки
+- 🔔 **Уведомления** Готовые Push-уведомления на основе FCM/APN токенов и Firebase
 - 🏗️ **FSD архитектура** для масштабируемости
 - 📱 **Навигация** с табами и модальными окнами
 - 🔄 **State Management** (Zustand + React Query)
@@ -68,6 +69,10 @@ _Версия: 28.01.2026 (v2)_
 - **dayjs** — работа с датами
 - **i18next** & **react-i18next** — интернационализация
 - **@legendapp/list** — производительные списки
+
+### Push Notifications
+
+Based on FCM/APNs tokens with firebase
 
 ---
 
@@ -151,13 +156,15 @@ npx expo run:ios
     ├── hooks/                # Переиспользуемые хуки
     │   ├── use-color-scheme.ts
     │   ├── useDebounce.ts
-    │   └── useSortField.ts
+    │   ├── useSortField.ts
+    │   └── useCheckAppVersion.ts
     ├── i18n/                 # 🌍 Интернационализация
     │   ├── translations/
     │   │   ├── en.json
     │   │   └── ru.json
     │   └── hooks/
     ├── libs/                 # Библиотеки (dayjs и др.)
+    ├── notifications/        # Push-Notifications
     ├── providers/            # React провайдеры
     ├── styles/               # 🎨 Темы и цвета
     │   ├── colors.ts
@@ -203,6 +210,11 @@ const { t } = useTranslation()
 ```
 
 ---
+
+### 🔔 Push-уведомления
+
+Подробнее:
+`shared/notifications/README.md`
 
 ## ⚙️ Конфигурация
 

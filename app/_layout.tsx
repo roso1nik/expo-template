@@ -42,6 +42,13 @@ export default function RootLayout() {
                                         animation: 'slide_from_bottom'
                                     }}
                                 />
+                                <Stack.Screen
+                                    name="(modal)/get-new-version"
+                                    options={{
+                                        presentation: 'formSheet',
+                                        animation: 'slide_from_bottom'
+                                    }}
+                                />
                             </Stack>
                             <StatusBar style="auto" />
                         </BottomSheetModalProvider>

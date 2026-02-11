@@ -9,7 +9,21 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./shared/assets/",
+      "infoPlist": {
+        "CFBundleLocalizations": ["ru", "en"],
+        "UIBackgroundModes": ["remote-notification"],
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "aps-environment": "production"
+      },
+      "bundleIdentifier": "com.app.name",
+      "buildNumber": "1",
+      "googleServicesFile": "./shared/notifications/config/GoogleService-Info.plist",
+      "usesBroadcastPushNotifications": true,
+      "appleTeamId": "TEAM_ID"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,13 +33,18 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.app",
+      "versionCode": 1,
+      "googleServicesFile": "./shared/notifications/config/google-services.json",
+      "permissions": ["android.permission.POST_NOTIFICATIONS"]
     },
     "web": {
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "@react-native-firebase/app",
       "expo-router",
       [
         "expo-splash-screen",
@@ -36,6 +55,28 @@
           "backgroundColor": "#ffffff",
           "dark": {
             "backgroundColor": "#000000"
+          }
+        }
+      ],
+      [
+        "expo-localization",
+        {
+          "supportedLocales": {
+            "ios": ["ru", "en"],
+            "android": ["ru", "en"]
+          }
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static",
+            "buildReactNativeFromSource": true,
+            "podfileProperties": {
+              "use_modular_headers!": true
+            },
+            "modularHeaders": ["@react-native-firebase/app", "@react-native-firebase/messaging"]
           }
         }
       ]
